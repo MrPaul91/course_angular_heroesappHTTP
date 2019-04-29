@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class HeroesService {
 
   heroesURL: string = "https://heroesapp-181ae.firebaseio.com/heroes.json";
-  heroeURL: string = "https://heroesapp-181ae.firebaseio.com/";
+  heroeURL: string = "https://heroesapp-181ae.firebaseio.com/heroes/";
 
   constructor(private http: HttpClient) { }
 
@@ -34,7 +34,7 @@ export class HeroesService {
   }
 
 
-  actualizarHeroe(heroe: Heroe, id: string) {
+  actualizarHeroe(heroe: Heroe, id$: string) {
 
     let headers = {
       headers: new HttpHeaders({
@@ -43,8 +43,10 @@ export class HeroesService {
     };
     //Realizamos la conversion del objeto heroe a JSON.
     let body = JSON.stringify(heroe);
-    
-    let URL = `${this.heroeURL}/${id}`;
+
+    let URL = `${this.heroeURL}/${id$}.json`;
+
+    console.log('aqui la ', URL);
 
     //Aquí realizamos el observable.
     return this.http.put(URL, body, headers).pipe(
@@ -52,5 +54,29 @@ export class HeroesService {
         return res;
       })
     )
+  }
+
+
+  getHeroe(key$: string) {
+
+    let url = `${this.heroeURL}/${key$}.json`;
+
+
+    return this.http.get(url).pipe(map(res => {
+      console.log(res);
+      return res;
+    }));
+  }
+
+
+  getHeroes() {
+
+    let url = `${this.heroeURL}.json`;
+
+
+    return this.http.get(url).pipe(map(res => {
+      console.log(res);
+      return res;
+    }));
   }
 }
