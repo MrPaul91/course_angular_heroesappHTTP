@@ -70,13 +70,24 @@ export class HeroesService {
 
 
   getHeroes() {
-
     let url = `${this.heroeURL}.json`;
-
 
     return this.http.get(url).pipe(map(res => {
       console.log(res);
       return res;
     }));
+  }
+
+
+  borrarHeroe(key$: string) {
+
+    let url = `${this.heroeURL}/${key$}.json`;
+
+    return this.http.delete(url).pipe(map(res => {
+      console.log(res);
+      return res;
+    }));
+
+
   }
 }

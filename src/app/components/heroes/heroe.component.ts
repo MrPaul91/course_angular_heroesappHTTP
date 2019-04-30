@@ -37,14 +37,10 @@ export class HeroeComponent implements OnInit {
         )
       }
     });
-
-
-
   }
 
   ngOnInit() {
   }
-
 
   guardar() {
 
@@ -82,7 +78,7 @@ export class HeroeComponent implements OnInit {
     }
     forma.setValue(defaultHero);
     */
-
+    //Aqui escogemos los que queremos que tengan un valor por defecto.
     forma.reset({
       casa: "Marvel"
     });

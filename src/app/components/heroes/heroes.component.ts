@@ -10,20 +10,42 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class HeroesComponent implements OnInit {
 
-  heroes:any[] = [];
+  heroes: any[] = [];
+  loading: boolean = true;
 
   constructor(private _heroeService: HeroesService) {
 
-    this._heroeService.getHeroes().subscribe((data:any) => {
-        console.log(data);
-        //Aca ya tengo los objetos separados.
-        for(let key$ in data){
-          this.heroes.push(data[key$]);
-        }
+    this._heroeService.getHeroes().subscribe((data: any) => {
+
+      //Fines ilustrativos.
+      setTimeout(()=> {
+          this.loading = false;
+          this.heroes = data;
+      }, 3000);
+
     });
-   }
+  }
 
   ngOnInit() {
+  }
+
+
+  borrarHeroe(key$: string, k: number) {
+
+    console.log(key$);
+    //Cuando borra retorna null.
+    this._heroeService.borrarHeroe(key$).subscribe((verificacion: any) => {
+        if ( verificacion ){
+          console.log(verificacion);
+        }
+        else{
+          // Eliminar del objeto en JavaScript
+          delete this.heroes[key$];
+        }
+
+    });
+
+
   }
 
 }
